@@ -10,7 +10,8 @@
   "author": "josedev03 <joseing03@hotmail.com>",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.7.5"
   },
   "devDependencies": {
     "nodemon": "^1.19.2"

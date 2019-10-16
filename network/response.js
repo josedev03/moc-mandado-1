@@ -1,7 +1,7 @@
 module.exports.success = (req, res, message, cod_status)=>{
-    res.status(cod_status || 200).send({
+    res.send({
         error: '',
-        body: message
+        body: message    
     });
 }
 
