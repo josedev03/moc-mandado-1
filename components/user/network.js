@@ -4,7 +4,10 @@ const response = require('../../network/response');
 const controller = require('./controller');
 
 router.get('/', (req, res)=>{
-    controller.getUsers()
+    
+    const filterUser = req.query.user;
+
+    controller.getUsers(filterUser)
         .then((listUsers)=>{
             response.success(req, res, listUsers, 200);
         })
@@ -24,16 +27,32 @@ router.post('/', (req, res)=>{
         })
 })
 
+router.patch('/:id', (req, res)=>{
+    controller.updateUser(req.params.id, req.body.apellido)
+        .then(data=>{
+            response.success(req, res, 'Usuario actualizado correctamente', 202);
+        })
+        .catch(error =>{
+            response.error(req, res, "Error interno", 500, error)
+        })
+})
+
+router.delete('/:id', (req, res)=>{
+    controller.deleteUser(req.params.id)
+        .then(data =>{
+            response.success(req, res, 'Usuario eliminado correctamente', 202);
+        })
+        .catch(error =>{
+            response.error(req, res, "Error interno", 500, error)
+        })
+})
+
 router.get('/:id', (req, res)=>{
     response.success(req, res, 'entregare un usuario');
 })
 
 router.put('/:id', (req, res)=>{
     response.success(req, res, 'actualizare un usuario');
-})
-
-router.delete('/:id', (req, res)=>{
-    response.success(req, res, 'eliminare un usuario');
 })
 
 module.exports = router;

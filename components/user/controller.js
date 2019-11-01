@@ -25,13 +25,37 @@ function createUser(body){
     });
 }
 
-function getUsers(){
+function getUsers(filterUser){
     return new Promise((resolve, reject)=>{
-        resolve(store.list());
+        resolve(store.list(filterUser));
     })
+}
+
+function updateUser(id, apellido){
+    return new Promise((resolve, reject)=>{
+
+        if(!id || !apellido){
+            reject("Datos no validos");
+        }
+
+        const newUser = store.updateUser(id, apellido);
+        resolve(newUser);
+    })
+}
+
+function deleteUser(id){
+    return new Promise((resolve, reject)=>{
+
+        if(!id) reject("Id no valido para eliminar un usuario");
+
+        store.deleteUser(id);
+        resolve();
+    });
 }
 
 module.exports = {
     createUser,
     getUsers,
+    updateUser,
+    deleteUser,
 }

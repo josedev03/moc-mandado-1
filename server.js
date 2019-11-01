@@ -1,6 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const routes = require('./network/routes');
+const db = require('./db');
+
+db('mongodb://localhost:27017/moc-mandado');
 
 const app = express();
 app.use(bodyParser.json());

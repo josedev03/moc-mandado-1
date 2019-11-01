@@ -1,27 +1,41 @@
-const db = require('mongoose');
 const Model = require('./model');
-
-// indicamos a mongoose que utilice la libreria de promesas nativa
-db.Promise = global.Promise;
-
-db.connect('mongodb://localhost:27017/moc-mandado', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(()=>console.log(`Conected to database`))
-.catch(err => console.log(`Error to try conect to db ` + err));
 
 async function addUser(user){
     const myUser = new Model(user);
     await myUser.save();
 }
 
-async function getUsers(){
-    const users = await Model.find();
+async function getUsers(filterUser){
+    let filter = {};
+
+    if(filterUser){
+        filter = {nombre: filterUser}
+    }
+
+    const users = await Model.find(filter);
     return users;
+}
+
+async function updateUser(id, apellido){
+    const foundUser = await Model.findOne({
+        _id: id
+    });
+
+    foundUser.apellido = apellido;
+
+    const newUser = await foundUser.save();
+    return newUser;
+}
+
+async function deleteUser(id){
+    return await Model.deleteOne({
+        _id: id
+    });
 }
 
 module.exports = {
     add: addUser,
     list: getUsers,
+    updateUser,
+    deleteUser,
 }
