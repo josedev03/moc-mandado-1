@@ -5,12 +5,29 @@ async function addItem(item){
     await newItem.save();
 }
 
-async function getItems(){
-    const listItems = await Model.find();
-    return listItems;
+function getItems(filterUser){
+    return new Promise((resolve, reject)=>{
+        let filter = {};
+
+        if(filterUser != null){
+            filter = {usuarioCreacion: filterUser}
+        }
+
+        Model.find(filter)
+            .populate('usuarioCreacion')
+            .exec((err, dataPopulated)=>{
+                if(err){
+                    console.log(err);
+                    reject('Error al obtener los articulos ' + err);
+                    return false;
+                }
+                
+                resolve(dataPopulated);
+        })
+    })
 }
 
 module.exports = {
-    add: addItem,
-    list: getItems,
+    addItem,
+    getItems,
 }

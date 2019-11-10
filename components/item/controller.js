@@ -5,18 +5,22 @@ function createItem(body){
     return new Promise((resolve, reject)=>{
         
         // validamos que lleguen los datos
-        if(!body.nombre || !body.descripcion){
+        if(!body.nombre || !body.descripcion || !body.usuarioCreacion){
             reject('datos erroneos para la creacion del item');
+            return false;
         }
 
         var newItem = {
             nombre: body.nombre,
             descripcion: body.descripcion,
+            usuarioCreacion: body.usuarioCreacion,
             fechaCreacion: new Date(),
             fechaModificacion: new Date(0)
         }
 
-        store.add(newItem);
+        store.addItem(newItem);
+
+        console.log(`articulo creado correctamente`);
 
         resolve(newItem);
     });
@@ -25,7 +29,7 @@ function createItem(body){
 // retornal los items de la bd
 function getItems(){
     return new Promise((resolve, reject)=>{
-        resolve(store.list())
+        resolve(store.getItems())
     })
 }
 

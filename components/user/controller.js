@@ -4,15 +4,16 @@ function createUser(body){
     return new Promise( (resolve, reject) =>{
 
         // validamos que lleguen datos
-        if( !body.nombre || !body.apellido || !body.edad){
+        if( !body.nombre || !body.apellido || !body.correo){
             reject('Error en el controlador: datos incorrectos');
+            return false;
         }
 
         // creamos la estructura de la collection
         const newUser = {
             nombre: body.nombre,
             apellido: body.apellido,
-            edad: body.edad,
+            correo: body.correo,
             fechaCreacion: new Date()
         }
 
